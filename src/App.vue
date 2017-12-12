@@ -16,6 +16,7 @@
   import Topbar from './components/Topbar'
   import ResumeEditor from './components/ResumeEditor'
   import ResumePreview from './components/ResumePreview'
+  import icons from './assets/icons'
 
   export default {
     name: 'app',
@@ -28,6 +29,9 @@
       Topbar,
       ResumeEditor,
       ResumePreview
+    },
+    created() {
+      document.body.insertAdjacentHTML('afterbegin', icons)
     }
   }
 </script>
@@ -45,10 +49,10 @@
       min-width: 1024px;
       max-width: 1440px;
       display: flex;
-      margin-top:16px;
+      margin-top: 16px;
       margin-bottom: 16px;
       justify-content: space-between;
-      width:100%; // 不加的话main只有1024px
+      width: 100%; // 不加的话main只有1024px
       align-self: center;
     }
   }
@@ -64,4 +68,11 @@
     background: #777;
   }
 
+  svg.icon{
+    height: 1em;
+    width: 1em;
+    fill:currentColor;
+    vertical-align: -0.1em;
+    font-size: 16px;
+  }
 </style>
