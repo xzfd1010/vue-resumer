@@ -52,6 +52,7 @@
       margin-top: 16px;
       margin-bottom: 16px;
       justify-content: space-between;
+      padding: 0 16px;
       width: 100%; // 不加的话main只有1024px
       align-self: center;
     }

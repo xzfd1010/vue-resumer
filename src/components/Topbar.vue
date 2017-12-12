@@ -33,7 +33,7 @@
       align-items: center;
       padding: 0 16px;
     }
-    & > .logo {
+    .logo {
       font-size: 24px;
       color: #000;
     }
