@@ -18,13 +18,11 @@
   import ResumePreview from './components/ResumePreview'
   import icons from './assets/icons'
 
+  import store from './store/index'
+
   export default {
     name: 'app',
-    data: function () {
-      return {
-        text: '你好'
-      }
-    },
+    store, // 在根组件中注入
     components: {
       Topbar,
       ResumeEditor,
@@ -38,6 +36,7 @@
 
 <style lang="less" type="text/less">
   .page {
+    min-width: 1024px;
     height: 100vh;
     display: flex;
     flex-direction: column;
@@ -59,7 +58,7 @@
   }
 
   #resumeEditor {
-    width: 35%;
+    min-width: 35%;
     background: #444;
   }
 
@@ -69,10 +68,10 @@
     background: #777;
   }
 
-  svg.icon{
+  svg.icon {
     height: 1em;
     width: 1em;
-    fill:currentColor;
+    fill: currentColor;
     vertical-align: -0.1em;
     font-size: 16px;
   }
