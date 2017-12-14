@@ -69,7 +69,6 @@
       }
     },
     created() {
-      console.log(this.resume);
     }
   }
 </script>

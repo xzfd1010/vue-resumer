@@ -3,16 +3,67 @@
     <div class="wrapper">
       <div class="logo">Resumer</div>
       <div class="actions">
-        <button class="primary">保存</button>
-        <button>预览</button>
+        <div v-if="logined" class="userActions">
+          <span class="welcome">您好，{{user.username}}</span>
+          <a href="#" class="button" @click.prevent="signOut">登出</a>
+        </div>
+        <div v-else class="userActions">
+          <a href="#" class="button primary" @click.prevent="signUpDialogVisible=true">注册</a>
+          <a href="#" class="button" @click.prevent="signInDialogVisible=true">登录</a>
+        </div>
+        <button class="button primary">保存</button>
+        <button class="button">预览</button>
       </div>
     </div>
+    <!--通过v-bind动态地向子组件传递visible属性，控制弹框是否显示-->
+    <!--父组件监听子组件的close事件，相当于回调-->
+    <MyDialog title="注册" :visible="signUpDialogVisible" @close="signUpDialogVisible = false">
+      <SignUpForm @success="signIn($event)"/>
+    </MyDialog>
+    <MyDialog title="登录" :visible="signInDialogVisible" @close="signInDialogVisible = false">
+      <SignInForm @success="signIn($event)"/>
+    </MyDialog>
   </div>
 </template>
 
 <script>
+  import MyDialog from './MyDialog'
+  import SignUpForm from './SignUpForm'
+  import SignInForm from './SignInForm'
+  import AV from '../lib/leancloud'
+
   export default {
-    name: 'Topbar'
+    name: 'Topbar',
+    data() {
+      return {
+        signUpDialogVisible: false,
+        signInDialogVisible: false
+      }
+    },
+    computed: {
+      user() {
+        return this.$store.state.user
+      },
+      logined() {
+        return this.user.id
+      }
+    },
+    components: {
+      MyDialog,
+      SignUpForm,
+      SignInForm
+    },
+    methods: {
+      signOut() {
+        AV.User.logOut();
+        this.$store.commit('removeUser');
+      },
+      signIn(user) {
+        this.signUpDialogVisible = false;
+        this.signInDialogVisible = false;
+        this.$store.commit('setUser', user);
+      }
+    }
   }
 </script>
 
@@ -39,7 +90,7 @@
     }
   }
 
-  button {
+  .button {
     width: 72px;
     height: 32px;
     border: none;
@@ -47,12 +98,28 @@
     font-size: 18px;
     background: #ddd;
     color: #222;
+    text-decoration: none;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    vertical-align: middle;
     &:hover {
       box-shadow: 1px 1px 1px hsla(0, 0, 0, 0.5);
     }
     &.primary {
       background: #02af5f;
       color: #fff;
+    }
+  }
+
+  .actions {
+    display: flex;
+    .userActions {
+      margin-right: 3em;
+    }
+    .welcome {
+      margin-right: .5em;
+      vertical-align: middle;
     }
   }
 </style>
