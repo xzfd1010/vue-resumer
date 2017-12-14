@@ -1,5 +1,5 @@
 <template>
-  <div class="dialograpper" v-show="visible">
+  <div class="dialogWrapper" v-show="visible">
     <div class="dialog">
       <header>{{title}}
         <!--点击关闭时触发close方法-->
