@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import objectPath from 'object-path';
 
 Vue.use(Vuex);
 export default new Vuex.Store({
@@ -52,8 +53,16 @@ export default new Vuex.Store({
     }
   },
   mutations: {
+    initState(state,payload){
+      Object.assign(state, payload);
+    },
     switchTab(state, payload) {
       state.selected = payload;
+      localStorage.setItem('state', JSON.stringify(state));
+    },
+    updateResume(state, {path,value}) {
+      objectPath.set(state.resume, path, value);
+      localStorage.setItem('state', JSON.stringify(state))
     }
   }
 })
